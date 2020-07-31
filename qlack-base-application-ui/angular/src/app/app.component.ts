@@ -1,11 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, Injectable, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Log} from 'ng2-logger/browser';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatDialog} from '@angular/material/dialog';
 import {BaseComponent} from './shared/component/base-component';
 import {TranslateService} from '@ngx-translate/core';
+import {WINDOW} from "./services/window.service";
 
+
+export interface Window {
+  myFunction: any;
+}
+
+@Injectable({providedIn: 'root'})
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,10 +28,13 @@ export class AppComponent extends BaseComponent implements OnInit {
   constructor(private router: Router,
               private jwtService: JwtHelperService,
               private dialog: MatDialog,
-               private translate: TranslateService) {
+              private translate: TranslateService,
+              @Inject(WINDOW) public window: Window) {
 
     super();
     translate.setDefaultLang('en');
+
+    // this.log.info(window);
 
     // // Check if an expired JWT exists and remove it.
     // const jwtString = localStorage.getItem(this.constants.JWT_STORAGE_NAME);

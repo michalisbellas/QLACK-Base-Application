@@ -1,33 +1,13 @@
 /* tslint:disable:max-line-length */
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+
 import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {CookieService} from 'ngx-cookie-service';
+
 import {routing} from './app.routes';
 import {LogoutComponent} from './auth/logout.component';
 import {NewPasswordComponent} from './auth/new-password.component';
 import {LoginComponent} from './auth/login.component';
 import {ForgotPasswordComponent} from './auth/forgot-password.component';
-import {JwtModule} from '@auth0/angular-jwt';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {NgProgressModule} from '@ngx-progressbar/core';
-import {AppConstants} from './app.constants';
-import {RxStompService} from '@stomp/ng2-stompjs';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatListModule} from '@angular/material/list';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgProgressHttpModule} from '@ngx-progressbar/http';
-import {QFormsModule} from '@qlack/forms';
+
 import {HeaderComponent} from './shared/layout/header.component';
 import {FooterComponent} from './shared/layout/footer.component';
 import {SidenavComponent} from './shared/layout/sidenav.component';
@@ -37,10 +17,38 @@ import {OkCancelModalComponent} from './shared/component/display/ok-cancel-modal
 import {TextModalComponent} from './shared/component/display/text-modal/text-modal.component';
 import {HomeComponent} from './home/home.component';
 import {FileuploadComponent} from './fileupload/fileupload.component';
-import {MatSelectModule} from '@angular/material/select';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {QLACKFormValidationModule} from '@qlack/form-validation';
+
+import { FormDialogComponent } from './form-dialog/form-dialog.component';
+import {WINDOW_PROVIDERS} from "./services/window.service";
+import { FormEditComponent } from './form-edit/form-edit.component';
+import { FormOpenComponent } from './form-open/form-open.component';
+import {AppConstants} from "./app.constants";
+import {NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {JwtModule} from "@auth0/angular-jwt";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatListModule} from "@angular/material/list";
+import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatInputModule} from "@angular/material/input";
+import {NgProgressModule} from "@ngx-progressbar/core";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgProgressHttpModule} from "@ngx-progressbar/http";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {MatSelectModule} from "@angular/material/select";
+import {QLACKFormValidationModule} from "@qlack/form-validation";
+import {CookieService} from "ngx-cookie-service";
+import {RxStompService} from "@stomp/ng2-stompjs";
+import {QFormsModule} from "@qlack/forms";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
 export function getJwtToken(): string {
   return localStorage.getItem(AppConstants.JWT_STORAGE_NAME);
@@ -57,7 +65,10 @@ export function getJwtToken(): string {
     NewPasswordComponent,
     ForgotPasswordComponent,
     HomeComponent,
-    FileuploadComponent
+    FileuploadComponent,
+    FormDialogComponent,
+    FormEditComponent,
+    FormOpenComponent
   ],
   imports: [
     BrowserModule,
@@ -105,13 +116,14 @@ export function getJwtToken(): string {
   ],
   exports: [],
   providers: [
+    WINDOW_PROVIDERS,
     CookieService,
     CanActivateGuard,
     RxStompService,
     QFormsModule,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [OkCancelModalComponent,TextModalComponent],
+  entryComponents: [OkCancelModalComponent,TextModalComponent, FormDialogComponent],
 })
 export class AppModule {
 }
